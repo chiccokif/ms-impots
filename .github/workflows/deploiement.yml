@@ -1,0 +1,26 @@
+on: 
+  push:
+    
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploiement en cours"
+
+  build-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloner le projet
+        uses: actions/checkout@v4
+
+      - name: version de java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build du projet
+        run: |
+          ls -al
+          ./mvnw clean package spring-boot:repackage -Dmaven.test.skip=true
+          ls -al target
